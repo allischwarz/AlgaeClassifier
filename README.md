@@ -73,12 +73,29 @@ Harmful algae can produce toxic effects on people, fish, shellfish, marine mamma
 <img width="600" alt="Screenshot 2025-04-30 at 9 54 33 AM" src="https://github.com/user-attachments/assets/f097c857-baf8-46af-8af1-0ef11cedb7a9" />
 
 
-Figure 1. Example of one algae species that can look very different.
+**Figure 1. Example of one algae species that can look very different.**
 
-### Algae Data
+<img width="600" alt="Screenshot 2025-04-30 at 10 00 55 AM" src="https://github.com/user-attachments/assets/20cb6906-3c64-421d-8f50-0d0b837dabd5" />
 
-A total of 853 images belonging to the following 25 classes were used to train, validate, and test the models:
 
+**Figure 2. Example of two different algae species that look similar.**
+
+An automatic deep learning (DL)-based algae classification model would significantly improve algae detection methods–both through detection accuracy and time saved. Using such a classification model would reduce the analysis bottleneck of counting and labeling algal cells and would reduce the dependency on labeling experts–freeing up their time for more additional research tasks. Users would be able to collect water samples, process them under a microscope (i.e., take pictures), pass them through a DL algae classification model, and obtain detailed information on the type (i.e., class) and number of algae in each sample. What previously took minutes or hours per sample would now take seconds with the power of DL. The overall goal of this project was to determine if pre-trained object detection models could be used to identify algae in microscopic images or whether a custom classification model should be built. The hypothesis was that the pre-trained models would be able to identify algae after a small amount of training with high accuracy (>95%) and would outperform the custom CNN since they can leverage transfer learning. I explored several DL methods for algae detection. Using the research findings allows us to draw conclusions on whether it is better to develop an algae classification model from scratch or using pretrained models. Results of this analysis were used to build a DL algae classification model that can be leveraged in research efforts. The contributions of this work include a customized DL algae classification model, a labeled algae dataset, and benchmark results.
+
+
+### Description
+Counting and labeling algae cells in water samples is a tedious, time consuming, and often difficult process. It can be difficult to distinguish the various types of algae species without expert knowledge and extensive experience, making this process even more time-consuming and difficult. A DL classification model could reduce this research bottleneck by automatically detecting, labeling, and counting algae in a sample.
+
+In this project, four DL classification models were trained and assessed for their ability to accurately and reliably detect and classify (i.e., label) algae in microscopic images. First, a custom convolutional neural network (CNN) was built, trained, and tuned on microscopic images of algae. Various CNN architectures were assessed and the model hyperparameters were tuned specifically to classify algae. Since collecting and labeling images of algae for training and developing such a model would be a time-consuming and potentially costly task, the remaining assessed models were pre-trained models. Pre-trained detection/classification models are trained on thousands or millions of images spanning many classes. In theory, their learning could be transferred to images of algae with minor training on algae images labeled with new classes (i.e., species of algae). The pre-trained models included YOLO [2], Mask R-CNN [3], and SSD [4]. They were trained with zero-shot, single-shot, and multi-shot learning. Zero-shot learning enables a model to recognize new classes without prior exposure by leveraging semantic relationships. The model is tested on a new class of data without training on an example. Singleshot learning trains a model with only one example per class, making efficient use of limited data. Multishot learning uses multiple examples per class, providing robustness by capturing greater intra-class variability. Multi-shot learning in this project included training on five, 10, and 20 samples. The classification accuracy of the four models was quantified and compared to determine the best method for creating a robust and highly accurate algae classification model using minimal training data. A final network architecture and baseline results are described below.
+
+## Data
+The ground truth dataset used in this project was comprised of 28 seawater samples. Each sample was viewed under a microscope and images of any algal cells were captured (Figure 3).
+
+<img width="454" alt="Screenshot 2025-04-30 at 10 04 52 AM" src="https://github.com/user-attachments/assets/3905a7fe-0ebb-417d-bb6b-46554498e415" />
+
+**Figure 3. Example of algae cell captured in microscopic image.**
+
+A total of 1,142 images were captured from these seawater samples. The data were then cleaned, meaning any blurry/non-visible images or images not containing algae (e.g., non-algal cells, debris) were discarded. After cleaning, 853 images remained in the dataset. These images were then labeled with the following 25 algae classes:
 - Actinoptychus
 - Bacillaria
 - Biddulphia
@@ -107,13 +124,14 @@ A total of 853 images belonging to the following 25 classes were used to train, 
 
 The cleaned and labeled data were divided into training (70%), validation (15%), and testing (15%) datasets.
 
+
 ## CNN Hyperparameter Tuning
 
-A custom CNN was built, trained, and tuned on microscopic images of algae. Various CNN architectures were assessed and the model hyperparameters were tuned specifically to classify algae. Various hyperparameters were assessed for the CNN, including kernel size, number of convolutional layers, number of epochs, and batch size. Overall, 16 different architectures were assessed (Table 1). The custom-built CNNs were trained on the entire training dataset and validated on the validation dataset. The model was then fed algae images from the testing dataset, and its ability to correctly label the algae were assessed.
+Various hyperparameters were assessed for the CNN, including kernel size, number of convolutional layers, number of epochs, and batch size. Overall, 16 different architectures were assessed (Table 1). The custom-built CNNs were trained on the entire training dataset and validated on the validation dataset. The model was then fed algae images from the testing dataset, and its ability to correctly label the algae were assessed.
 
-Table 1. CNN Hyperparameter Tuning
+**Table 1. CNN Hyperparameter Tuning.**
 | CNN Name  | Kernel Size | Layers | Epochs | Batch Size |  
-| --------- | ----------- |------- |------- |----------- |
+| --------- | ----------- | ------ | ------ | ---------- |
 |    CNN1   |     3x3     |   3    |   30   |     32     |
 |    CNN2   |     3x3     |   3    |   30   |     64     |
 |    CNN3   |     3x3     |   3    |   50   |     32     |
@@ -134,7 +152,7 @@ Table 1. CNN Hyperparameter Tuning
 
 ## Pre-Trained Model Training
 
-Since collecting and labeling images of algae for training and developing such a model would be a time-consuming and potentially costly task, the remaining assessed models were pre-trained models. Pre-trained detection/classification models are trained on thousands or millions of images spanning many classes. In theory, their learning could be transferred to images of algae with minor training on algae images labeled with new classes (i.e., species of algae). The pre-trained models included YOLO [1], Mask R-CNN [2], and SSD [3]. The pre-trained models (YOLO, Mask R-CNN, SSD) were assessed for their ability to classify algae after zero-, single-, and multi-shot learning. During zeroshot learning, the models were not given any additional training. During single-shot learning, the models were trained on one image of each class of algae from the training dataset. During multi-shot learning, the models were trained on five, 10, and 20 images of each class of algae from the training dataset. The pre-trained models were then evaluated for their ability to classify algae with the testing dataset.
+The pre-trained models (YOLO, Mask R-CNN, SSD) were assessed for their ability to classify algae after zero-, single-, and multi-shot learning. During zeroshot learning, the models were not given any additional training. During single-shot learning, the models were trained on one image of each class of algae from the training dataset. During multi-shot learning, the models were trained on five, 10, and 20 images of each class of algae from the training dataset. The pre-trained models were then evaluated for their ability to classify algae with the testing dataset.
 
 ## Evaluation Metrics
 
@@ -146,8 +164,39 @@ where TP: true positive; TN: true negative; FP: false positive; FN: false negati
 
 ### Evaluation 
 
+The results from the CNN hyperparameter tuning and model assessments are outlined in detail below.
+
 ## CNN Results
-The CNN model was assessed with various hyperparameters, as previously outlined in Table 1. Overall, CNN2, CNN4, and CNN10 were the best performing models with accuracies, precisions, and recalls of 100%. Results from all 16 CNNs are outlined in Table 2. Of the top performing models, CNN2 was the fastest and least computationally expensive and was therefore selected as the best CNN architecture for algae classification in this project (algaeclassifier_cnn). The training/validation loss and training/validation accuracy of CNN2 can be seen in Figures 4 and 5, respectively. Figure 4 suggests that the model did not overfit since validation loss continues to decline. 
+The CNN model was assessed with various hyperparameters, as previously outlined in Table 1. Overall, CNN2, CNN4, and CNN10 were the best performing models with accuracies, precisions, and recalls of 100%. Results from all 16 CNNs are outlined in Table 2.
+
+**Table 2. CNN performance results.**
+| CNN Name  | Accuracy | Precision | Recall | 
+| --------- | -------- | --------- | ------ |
+|    CNN1   |  98.96%  |   90.90%  | 82.35% |    
+|    CNN2   |**100.00%**|**100.00%**|**100.00%**|  
+|    CNN3   |  %  |   %  | % |  
+|    CNN4   |  %  |   %  | % |
+|    CNN5   |  %  |   %  | % |
+|    CNN6   |  %  |   %  | % |
+|    CNN7   |  %  |   %  | % |
+|    CNN8   |  %  |   %  | % |
+|    CNN9   |  %  |   %  | % |
+|    CNN10  |  %  |   %  | % |
+|    CNN11  |  %  |   %  | % |
+|    CNN12  |  %  |   %  | % |
+|    CNN13  |  %  |   %  | % |
+|    CNN14  |  %  |   %  | % |
+|    CNN15  |  %  |   %  | % |
+|    CNN16  |  %  |   %  | % |
+
+Of the top performing models, CNN2 was the fastest
+and least computationally expensive and was
+therefore selected as the best CNN architecture for
+algae classification in this project. The
+training/validation loss and training/validation
+accuracy of CNN2 can be seen in Figures 4 and 5,
+respectively. Figure 4 suggests that the model did not
+overfit since validation loss continues to decline.
 
 Figure 4. Training (loss) and validation (val_loss) loss of the CNN2 model. 
 
