@@ -203,9 +203,8 @@ Of the top performing models, CNN2 was the fastest and least computationally exp
 
 ## B. YOLO Results
 The YOLOv5 [5] implementation was selected as the backbone YOLO architecture (Figure 6) since it has models that specifically support classification rather than object detection. 
+
 <img width="487" alt="6" src="https://github.com/user-attachments/assets/55b5982f-e4c5-4f50-956a-8efa819a1b2f" />
-
-
 **Figure 6. YOLO architecture [2].**
 
 Initial exploratory assessment revealed that the YOLO validation loss plateaued after approximately 10 epochs, so the model was trained with 10 epochs during the single- and multishot learning. Results from the YOLO training can be found in Table 3.
@@ -259,9 +258,8 @@ Overall, multi-shot training with 20 samples produced the best results. Zero-sho
 ## D. SSD Results
 
 Initial exploratory assessment revealed that the SSD (Figure 10) validation loss plateaued after approximately 10 epochs, so the model was trained with 10 epochs during the single- and multi-shot learning. 
+
 <img width="505" alt="10" src="https://github.com/user-attachments/assets/d8850afd-8c91-4815-a903-decd9022c2c3" />
-
-
 **Figure 10. SSD architecture [4].**
 
 Results from the SSD training can be found in Table 5.
@@ -294,12 +292,65 @@ The CNN2 had the highest accuracy of all the models assessed (Table 6). Of the p
 |    SSD    |  91.12%   |   32.69   |   56.59%  |  
 
 
+### IV. RELATED WORK
 
-### Sources
+The development of DL models for algae classification, particularly through the use of pretrained object detection models and custom CNNs, intersects with broader research trends in automatic image classification, transfer learning, and the use of pre-trained models and small example datasets.
 
+While a custom-build classification model, such as the CNN developed in this project, has the possibility to achieve high performance on the very particular task of algae classification, it can require a massive representative dataset to train and fine-tune. Pretrained models, on the other hand, offer a promising avenue for the development of accurate and robust classification tools with the use of limited training data. However, these models can be limited by the specificity of the training data and the nature of the transfer learning.
+
+Further research into optimizing these models for specific types of biological data, combined with advancements in transfer learning methodologies, could enhance their applicability and accuracy in complex image classification tasks. Representative works related to this project include studies on transfer learning applications and specialized image classification systems for biological samples.
+
+## A. Transfer Learning for Image Classification
+
+Researchers have extensively explored transfer learning, where a model developed for one task is repurposed for a different but related task. This approach is well-suited for domains where labeled data are scarce or expensive to obtain. Notably, transfer learning has been leveraged successfully in medical image analysis, as demonstrated by Shin et al., who used pre-trained CNNs to detect thoracoabdominal lymph nodes and interstitial lung disease with significant success [6]. However, the efficacy of transfer learning heavily depends on the similarity between the source and target tasks. A common drawback is that the transferred features might not be optimal for new tasks that significantly deviate from the original data domain.
+
+## B. Algae Classification Models
+
+Several models have been developed for algae classification. For example, Ai et. al. showed 89.6% and 86.0% accuracy in identifying harmful algae blooms with a random forest and long short-term memory model, respectively [7]. Though these results are promising, it should be noted that these models were classifying algae blooms and not individual cells. Zhou et. al. showed mean average precision of algae detection on six classes of cells in a variety of DL models (e.g., Faster R-CNN, SSD, YOLOv3) ranging from 24.6% to 70.9% [8]. These models were trained on a much larger dataset (>2,000 images) than the one used in this project; however, the dataset was limited to only 6 classes. In addition, the precision of these models is low to average, suggesting that transfer learning via these models may not be as good as the custom-built CNN described in this project. Hawezi trained a CNN on 2,749 microscopic algae images and leveraged transfer learning via an AlexNet and MobileNetv2 [9]. However, this work does not outline quantitative metrics on the performance of the model and only categorizes the algae into four broad categories (green vegetative, red vegetative, green cyst, red cyst) rather than identifying individual algae species.
+
+These models offered improvements over manual methods but were not accurate or specialized enough to act as public algae classification tools. More research in this area is needed, which this project aims to address.
+
+
+## C. Pre-Trained Models in Biological Imaging.
+
+The use of pre-trained models has been explored in different contexts of biological imaging [10]. These models generally excel when fine-tuned with a substantial amount of domain-specific data. While these models demonstrate high accuracy in specific settings, their adaptation to new domains (e.g., algae classification) requires careful tuning and sufficient training data, often necessitating adjustments to the network architecture or training process to improve specificity and sensitivity.
+
+
+### V. SUMMARY AND CONCLUSIONS
+
+Four DL models were assessed for their ability to classify algae in microscopic images: CNN, YOLO, Mask R-CNN, and SSD. The CNN was designed, trained, validated, and tuned specific to algae images. Pre-trained models (YOLO, Mask R-CNN, SSD) were trained with zero-, single-, and multi-shot learning to determine if transfer learning could be leveraged to build a classification model with minimal algae data.
+
+Overall, this research showed that a custom-built CNN performed best for classifying algae in microscopic images. The CNN unexpectedly outperformed all three pre-trained models, which were hypothesized to perform better than the CNN since they could theoretically transfer their pretrained learning onto the algae images.
+
+Multiple CNN architectures were assessed, and three achieved 100% accuracy, precision, and recall. CNN2 was the smallest and least computationally expensive of these three models but still achieved the same performance. Therefore, it is considered the top choice for an algae classification architecture of the ones assessed in this project. The pre-trained models were expected to outperform the CNN since they can leverage transfer learning. However, they did not perform as well as the CNN. While they were fairly accurate, their precision and recall were low. However, it is possible that these models could perform better with more training data (e.g., training on the entire ground truth dataset). In addition, it is possible that the pre-trained models generalize better than the CNN to other microscopic images (that may be similar to the ground truth dataset, but captured under different conditions) since they can leverage their inherent knowledge and semantic understanding.
+
+
+## A. Conclusions
+
+In conclusion, a CNN trained on algae imagery was the best performing classification model and outperformed the pre-trained models. The CNN was able to achieve 100% accuracy, precision, and recall with three convolutional layers, 3x3 kernels, 30 epochs, and a batch size of 64. Though the pretrained models performed well after training on 20 samples in terms of accuracy, their precision and recall were low. It seemed that these models were not able to transfer their learning to algae classification well when trained with up to 20 images. However, it is possible that, with more training, these models can perform as well as the CNN. In addition, it is possible that the pre-trained models would generalize well to other microscopic algae images.
+
+
+## B. Future Work
+
+Results of this project left several additional research questions that would be interesting to assess in future work. First, it would be interesting to train, validate, and test all four models on more data. While the CNN performed surprisingly well with a ground truth dataset only containing 853 images, 853 images is not a large dataset when developing DL models, particularly since this data was split between 25 classes. It would be interesting to characterize and compare model performances after training on a larger and more variable dataset.
+
+Second, it would be interesting to compare the performance of the CNN to the pre-trained models if they were trained on the entire algae ground truth dataset. While the pre-trained models did not perform as well as the CNN, their performance improved with additional training samples (e.g., 20-shot trained models outperformed single-shot trained models). It is possible that the pre-trained models would perform as well as the CNN.
+
+Third, all four models could be tested on additional data, particularly algae data captured by others at different labs and under different conditions. While microscopic images will all be captured similarly, variations in environmental conditions, sample processing, microscopes, and image capture could affect the performance of the classification models. It is possible that the model performance would decrease when tested on a larger and more variable algae dataset. In addition, it would be interesting to see if the pre-trained models generalize better to additional algae data than the CNN since they can leverage their inherent weights and knowledge.
+
+
+### REFERENCES
+[1] https://www.noaa.gov/what-is-harmful-algalbloom
 [2] https://arxiv.org/pdf/1506.02640.pdf
 [3] https://arxiv.org/pdf/1703.06870.pdf
 [4] https://arxiv.org/pdf/1512.02325.pdf
 [5] https://github.com/ultralytics/yolov5
+[6] https://bmcmedimaging.biomedcentral.com/articles/10.1186/s12880-022-00793-7
+[7] https://www.sciencedirect.com/science/article/pii/S0043135423001458
+[8] https://arxiv.org/pdf/2211.07546.pdf
+[9] https://iwaponline.com/wqrj/article/45/4/413/39738/Algae-based-Biomonitoring-Predicting-Diatom
+[10] https://www.sciencedirect.com/science/article/pii/S0002944021002613
+
+
 
 
