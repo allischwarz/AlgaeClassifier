@@ -338,14 +338,23 @@ Third, all four models could be tested on additional data, particularly algae da
 
 # REFERENCES
 [1] https://www.noaa.gov/what-is-harmful-algalbloom
+
 [2] https://arxiv.org/pdf/1506.02640.pdf
+
 [3] https://arxiv.org/pdf/1703.06870.pdf
+
 [4] https://arxiv.org/pdf/1512.02325.pdf
+
 [5] https://github.com/ultralytics/yolov5
+
 [6] https://bmcmedimaging.biomedcentral.com/articles/10.1186/s12880-022-00793-7
+
 [7] https://www.sciencedirect.com/science/article/pii/S0043135423001458
+
 [8] https://arxiv.org/pdf/2211.07546.pdf
+
 [9] https://iwaponline.com/wqrj/article/45/4/413/39738/Algae-based-Biomonitoring-Predicting-Diatom
+
 [10] https://www.sciencedirect.com/science/article/pii/S0002944021002613
 
 
