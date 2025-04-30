@@ -22,12 +22,10 @@ Run the script, and it will output classification labels and predictions associa
 
 There are multiple trained models you can call via the AlgaeClassifier.ipynb script.
 
-- algaeclassifier_cnn: Custom-built CNN trained, validated, and tested on the entire algae dataset (all 853 images).
-- YOLO
-- MASK RCN
-- SSD
-- 
-[fill out]
+- **algaeclassifier_cnn**: Custom-built CNN trained, validated, and tested on the entire algae dataset (all 853 images); kernel size: 3x3; layers: 3; epochs: 30; batch size: 32
+- **algaeclassifier_yolo**: YOLOv5 model finetuned with 20-shot learning; epochs: 10
+- **algaeclassifier_maskrcnn**: Mask R-CNN model finetuned with 20-shot learning; epochs: 10
+- **algaeclassifier_ssd**: SSD model finetuned with 20-shot learning; epochs: 10
 
 
 ### Algae Classes
