@@ -1,9 +1,11 @@
 # AlgaeClassifier
 Classifies microscopic images of algae with 25 classes
 
+
 ### Overview
 
 This repo contains multiple image classification models (see models folder) trained on microscopic images of algae.
+
 
 ### How to Use
 
@@ -14,6 +16,7 @@ The AlgaeClassifier.ipynb script loads and classifies algae images. In the scrip
 - The path of [results_directory] to where you would like the classification results to be saved
 
 Run the script, and it will output classification labels and predictions associated with each image name as well as output an excel file containing this information to the [results_directory] path.
+
 
 ### Model Descriptions
 
@@ -26,6 +29,35 @@ There are multiple trained models you can call via the AlgaeClassifier.ipynb scr
 - 
 [fill out]
 
+
+### Algae Classes
+
+The algae classification model can identify the following 25 classes:
+- Actinoptychus
+- Bacillaria
+- Biddulphia
+- Centric Diatom
+- Ciliate
+- Coscinodiscus
+- Cylindrotheca
+- Dactyliosolen
+- Diatom
+- Dinoflagellate
+- Entomoneis
+- Euglenoid
+- Fragilidium
+- Hemiaulus
+- Heterosigma Akashiwo
+- Lyrella
+- Navicula
+- Nitzschia
+- Odontella
+- Paralia
+- Pennate Diatom
+- Pleurosigma
+- Prorocentrum
+- Tintinnid
+- Tripos Hircus
 
 
 ### Abstract
